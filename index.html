@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ateliers APC – Centre de Formation Technique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ===================== RESET & VARIABLES ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #0AA8E9;
+      --green:  #86C547;
+      --pink:   #DA2361;
+      --yellow: #FBA91F;
+      --dark:   #0D1117;
+      --dark2:  #161C26;
+      --dark3:  #1E2635;
+      --gray:   #8A93A8;
+      --light:  #F4F6FA;
+      --white:  #FFFFFF;
+      --font-title: 'League Spartan', sans-serif;
+      --font-body:  'Poppins', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ===================== SCROLLBAR ===================== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark2); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ===================== NAVBAR ===================== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 44px; width: auto;
+    }
+    .nav-logo span {
+      font-family: var(--font-title);
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--white);
+      letter-spacing: 0.03em;
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--blue);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover { background: #09c0ff !important; transform: translateY(-1px); }
+
+    .nav-burger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .nav-burger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ===================== HERO ===================== */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 120px 5% 80px;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(10,168,233,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 50% at 20% 80%, rgba(218,35,97,0.08) 0%, transparent 50%),
+                  var(--dark);
+    }
+
+    /* animated floating orbs */
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.18;
+      animation: floatOrb 8s ease-in-out infinite;
+    }
+    .orb1 { width: 400px; height: 400px; background: var(--blue); top: -100px; right: 10%; animation-delay: 0s; }
+    .orb2 { width: 300px; height: 300px; background: var(--green); bottom: 0; right: 30%; animation-delay: 3s; }
+    .orb3 { width: 250px; height: 250px; background: var(--yellow); bottom: 10%; left: 5%; animation-delay: 5s; }
+
+    @keyframes floatOrb {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 680px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(10,168,233,0.12);
+      border: 1px solid rgba(10,168,233,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-badge::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      background: var(--blue); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+
+    .hero-title {
+      font-family: var(--font-title);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero-title span { color: var(--blue); }
+    .hero-title .accent-green { color: var(--green); }
+
+    .hero-sub {
+      font-size: 1.05rem; font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      max-width: 520px; margin-bottom: 40px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue); color: var(--white);
+      padding: 14px 30px; border-radius: 8px;
+      font-family: var(--font-body); font-weight: 600; font-size: 0.95rem;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 4px 24px rgba(10,168,233,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(10,168,233,0.45); background: #09c0ff; }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--white);
+      padding: 14px 30px; border-radius: 8px;
+      font-family: var(--font-body); font-weight: 500; font-size: 0.95rem;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.05); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 60px;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .stat-item {}
+    .stat-number {
+      font-family: var(--font-title);
+      font-size: 2.2rem; font-weight: 900;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem; font-weight: 400;
+      color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    .hero-visual {
+      position: absolute; right: 5%; top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .hero-logo-wrap {
+      width: 320px; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .hero-logo-wrap img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 40px rgba(10,168,233,0.3)); }
+    .logo-ring {
+      position: absolute; inset: -20px;
+      border-radius: 50%;
+      border: 1px solid rgba(10,168,233,0.15);
+      animation: spin 20s linear infinite;
+    }
+    .logo-ring2 {
+      position: absolute; inset: -40px;
+      border-radius: 50%;
+      border: 1px dashed rgba(134,197,71,0.1);
+      animation: spin 35s linear infinite reverse;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===================== SECTIONS COMMON ===================== */
+    section { padding: 100px 5%; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-title);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .section-sub {
+      font-size: 1rem; font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px; line-height: 1.8;
+    }
+
+    .section-header { margin-bottom: 64px; }
+
+    /* ===================== ABOUT / WHY ===================== */
+    #about {
+      background: var(--dark2);
+      position: relative; overflow: hidden;
+    }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-card {
+      background: var(--dark3);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 48px;
+      display: flex; flex-direction: column; gap: 32px;
+    }
+
+    .value-item {
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .value-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .value-icon.blue  { background: rgba(10,168,233,0.12); }
+    .value-icon.green { background: rgba(134,197,71,0.12); }
+    .value-icon.pink  { background: rgba(218,35,97,0.12); }
+    .value-icon.yellow { background: rgba(251,169,31,0.12); }
+
+    .value-text h4 {
+      font-family: var(--font-title);
+      font-size: 1rem; font-weight: 700; margin-bottom: 4px;
+    }
+    .value-text p {
+      font-size: 0.85rem; color: var(--gray); line-height: 1.6;
+    }
+
+    .about-text {}
+    .about-text .section-sub { max-width: 100%; margin-bottom: 32px; }
+
+    .baseline {
+      font-family: var(--font-title);
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--blue);
+      border-left: 3px solid var(--blue);
+      padding-left: 16px;
+      margin-bottom: 32px;
+    }
+
+    .tag-list {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px;
+    }
+    .tag {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.8rem; font-weight: 500; color: var(--gray);
+    }
+
+    /* ===================== FORMATIONS ===================== */
+    #formations { background: var(--dark); }
+
+    .formations-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .formation-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+    }
+    .formation-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--card-color), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .formation-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.12); }
+    .formation-card:hover::before { opacity: 1; }
+    .formation-card:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+
+    .formation-card.c-blue  { --card-color: var(--blue); }
+    .formation-card.c-green { --card-color: var(--green); }
+    .formation-card.c-pink  { --card-color: var(--pink); }
+    .formation-card.c-yellow { --card-color: var(--yellow); }
+
+    .card-icon {
+      font-size: 2rem; margin-bottom: 20px;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px; border-radius: 4px;
+      margin-bottom: 14px;
+    }
+    .formation-card.c-blue  .card-tag { background: rgba(10,168,233,0.12); color: var(--blue); }
+    .formation-card.c-green .card-tag { background: rgba(134,197,71,0.12); color: var(--green); }
+    .formation-card.c-pink  .card-tag { background: rgba(218,35,97,0.12);  color: var(--pink); }
+    .formation-card.c-yellow .card-tag { background: rgba(251,169,31,0.12); color: var(--yellow); }
+
+    .card-title {
+      font-family: var(--font-title);
+      font-size: 1.25rem; font-weight: 800;
+      line-height: 1.2; margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 0.85rem; color: var(--gray);
+      line-height: 1.7; flex-grow: 1; margin-bottom: 24px;
+    }
+
+    .card-meta {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: auto;
+    }
+    .meta-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; color: var(--gray);
+    }
+    .meta-item svg { opacity: 0.6; }
+
+    .card-price {
+      display: flex; align-items: baseline; gap: 6px;
+      margin-top: 20px;
+    }
+    .price-amount {
+      font-family: var(--font-title);
+      font-size: 1.6rem; font-weight: 900;
+    }
+    .formation-card.c-blue  .price-amount { color: var(--blue); }
+    .formation-card.c-green .price-amount { color: var(--green); }
+    .formation-card.c-pink  .price-amount { color: var(--pink); }
+    .formation-card.c-yellow .price-amount { color: var(--yellow); }
+
+    .price-label {
+      font-size: 0.75rem; color: var(--gray);
+    }
+
+    .card-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px;
+      font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; color: var(--white);
+      transition: gap 0.2s;
+    }
+    .card-cta:hover { gap: 10px; }
+
+    /* wide card */
+    .formation-card.wide {
+      grid-column: span 2;
+      flex-direction: row; gap: 40px;
+    }
+    .formation-card.wide .card-body { flex-grow: 1; }
+
+    /* ===================== PUBLIC / CIBLES ===================== */
+    #cibles {
+      background: var(--dark2);
+    }
+
+    .cibles-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .cible-card {
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 40px;
+    }
+
+    .cible-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 24px;
+    }
+    .cible-badge {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 5px 12px; border-radius: 100px;
+    }
+    .cible-badge.b2b { background: rgba(251,169,31,0.12); color: var(--yellow); border: 1px solid rgba(251,169,31,0.2); }
+    .cible-badge.b2c { background: rgba(10,168,233,0.12); color: var(--blue); border: 1px solid rgba(10,168,233,0.2); }
+
+    .cible-title {
+      font-family: var(--font-title);
+      font-size: 1.3rem; font-weight: 800;
+    }
+
+    .cible-desc {
+      font-size: 0.9rem; color: var(--gray); line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .cible-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .cible-list li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.87rem; color: rgba(255,255,255,0.8);
+    }
+    .cible-list li::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      border-radius: 50%; flex-shrink: 0;
+    }
+    .cible-card:first-child .cible-list li::before { background: var(--yellow); }
+    .cible-card:last-child  .cible-list li::before { background: var(--blue); }
+
+    .promise-box {
+      margin-top: 28px; padding: 16px 20px;
+      border-radius: 10px;
+      font-size: 0.85rem; font-weight: 500; line-height: 1.5;
+    }
+    .promise-box.b2b { background: rgba(251,169,31,0.08); border: 1px solid rgba(251,169,31,0.15); color: rgba(255,255,255,0.85); }
+    .promise-box.b2c { background: rgba(10,168,233,0.08);  border: 1px solid rgba(10,168,233,0.15);  color: rgba(255,255,255,0.85); }
+    .promise-box strong { display: block; margin-bottom: 4px; font-family: var(--font-title); font-size: 0.9rem; }
+
+    /* ===================== PROCESS ===================== */
+    #process { background: var(--dark); }
+
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: ''; position: absolute;
+      top: 32px; left: 10%; right: 10%;
+      height: 1px; background: linear-gradient(90deg, transparent, rgba(10,168,233,0.3) 20%, rgba(10,168,233,0.3) 80%, transparent);
+    }
+
+    .process-step {
+      padding: 0 24px 0 0;
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+
+    .step-num {
+      width: 64px; height: 64px;
+      background: var(--dark2);
+      border: 1px solid rgba(10,168,233,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-title);
+      font-size: 1.2rem; font-weight: 900; color: var(--blue);
+      margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+
+    .step-title {
+      font-family: var(--font-title);
+      font-size: 1.05rem; font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .step-desc {
+      font-size: 0.83rem; color: var(--gray); line-height: 1.7;
+    }
+
+    /* ===================== TESTIMONIALS / PREUVES ===================== */
+    #preuves { background: var(--dark2); }
+
+    .preuves-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .preuve-card {
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .preuve-quote {
+      font-size: 0.9rem; color: rgba(255,255,255,0.75);
+      line-height: 1.8; margin-bottom: 24px; font-style: italic;
+    }
+    .preuve-quote::before { content: '"'; font-size: 2rem; color: var(--blue); line-height: 0; vertical-align: -8px; margin-right: 4px; }
+
+    .preuve-author {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-title); font-weight: 800; font-size: 1rem;
+    }
+    .author-info h5 {
+      font-family: var(--font-title); font-size: 0.95rem; font-weight: 700;
+    }
+    .author-info p { font-size: 0.78rem; color: var(--gray); }
+
+    .stars { color: var(--yellow); font-size: 0.85rem; margin-bottom: 16px; }
+
+    /* ===================== FAQ ===================== */
+    #faq { background: var(--dark); }
+
+    .faq-wrap { max-width: 720px; }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 0;
+    }
+
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer;
+      font-family: var(--font-title); font-size: 1rem; font-weight: 700;
+      gap: 16px;
+    }
+    .faq-q .faq-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(10,168,233,0.1);
+      border: 1px solid rgba(10,168,233,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem; color: var(--blue);
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      font-size: 0.88rem; color: var(--gray); line-height: 1.8;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-top: 16px; }
+
+    /* ===================== CONTACT ===================== */
+    #contact {
+      background: var(--dark2);
+    }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+
+    .contact-info h3 {
+      font-family: var(--font-title);
+      font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;
+    }
+    .contact-info p {
+      font-size: 0.9rem; color: var(--gray); line-height: 1.8; margin-bottom: 40px;
+    }
+
+    .contact-detail {
+      display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px;
+    }
+    .contact-detail-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(10,168,233,0.1);
+      border: 1px solid rgba(10,168,233,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-detail-text h5 {
+      font-family: var(--font-title); font-size: 0.9rem; font-weight: 700; margin-bottom: 2px;
+    }
+    .contact-detail-text p { font-size: 0.85rem; color: var(--gray); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+    .form-group label {
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--gray);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: var(--font-body); font-size: 0.9rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--blue);
+    }
+    .form-group textarea { min-height: 120px; resize: vertical; }
+    .form-group select option { background: var(--dark3); }
+
+    .form-submit {
+      background: var(--blue); color: var(--white);
+      border: none; border-radius: 8px;
+      padding: 14px 32px;
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(10,168,233,0.3);
+    }
+    .form-submit:hover { background: #09c0ff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(10,168,233,0.45); }
+
+    /* ===================== FOOTER ===================== */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 60px 5% 32px;
+    }
+
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem; color: var(--gray);
+      line-height: 1.8; margin: 16px 0 24px;
+      max-width: 300px;
+    }
+
+    .footer-logo {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .footer-logo img { height: 40px; }
+    .footer-logo span {
+      font-family: var(--font-title); font-size: 1.1rem; font-weight: 800;
+    }
+
+    .social-links { display: flex; gap: 12px; }
+    .social-link {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .social-link:hover { background: rgba(10,168,233,0.15); border-color: rgba(10,168,233,0.3); }
+
+    .footer-col h5 {
+      font-family: var(--font-title); font-size: 0.9rem; font-weight: 700;
+      margin-bottom: 20px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a {
+      font-size: 0.85rem; color: var(--gray); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--white); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bottom p { font-size: 0.8rem; color: var(--gray); }
+
+    .color-bar {
+      display: flex; gap: 0; height: 4px;
+      border-radius: 2px; overflow: hidden; width: 120px;
+    }
+    .color-bar span { flex: 1; }
+    .color-bar span:nth-child(1) { background: var(--blue); }
+    .color-bar span:nth-child(2) { background: var(--green); }
+    .color-bar span:nth-child(3) { background: var(--pink); }
+    .color-bar span:nth-child(4) { background: var(--yellow); }
+
+    /* ===================== CERTIF BANNER ===================== */
+    .certif-banner {
+      background: linear-gradient(135deg, rgba(10,168,233,0.1) 0%, rgba(134,197,71,0.08) 100%);
+      border: 1px solid rgba(10,168,233,0.2);
+      border-radius: 16px;
+      padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; margin-top: 64px; flex-wrap: wrap;
+    }
+    .certif-text h3 {
+      font-family: var(--font-title);
+      font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;
+    }
+    .certif-text p { font-size: 0.9rem; color: var(--gray); }
+    .certif-logos {
+      display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+    }
+    .certif-badge-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-family: var(--font-title);
+      font-size: 0.85rem; font-weight: 800; color: var(--white);
+    }
+
+    /* ===================== NUMBERS SECTION ===================== */
+    .numbers-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.06);
+      border-radius: 16px; overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .number-cell {
+      background: var(--dark2);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .number-big {
+      font-family: var(--font-title);
+      font-size: 3rem; font-weight: 900; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .number-big.blue   { color: var(--blue); }
+    .number-big.green  { color: var(--green); }
+    .number-big.pink   { color: var(--pink); }
+    .number-big.yellow { color: var(--yellow); }
+    .number-label { font-size: 0.82rem; color: var(--gray); font-weight: 400; }
+
+    /* ===================== MOBILE ===================== */
+    @media (max-width: 1100px) {
+      .formations-grid { grid-template-columns: 1fr 1fr; }
+      .formation-card.wide { grid-column: span 2; flex-direction: column; }
+      .hero-visual { display: none; }
+      .hero-content { max-width: 100%; }
+    }
+
+    @media (max-width: 880px) {
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+
+      .nav-links.open {
+        display: flex; flex-direction: column; gap: 0;
+        position: fixed; top: 72px; left: 0; right: 0;
+        background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 16px 0;
+      }
+      .nav-links.open li { padding: 0; }
+      .nav-links.open a { display: block; padding: 14px 5%; border-bottom: 1px solid rgba(255,255,255,0.04); }
+      .nav-links.open a.nav-cta { margin: 12px 5% 4px; border-radius: 8px; text-align: center; }
+
+      .about-grid,
+      .cibles-grid,
+      .contact-grid,
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+
+      .formations-grid { grid-template-columns: 1fr; }
+      .formation-card.wide { grid-column: span 1; }
+
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .process-steps::before { display: none; }
+
+      .preuves-grid { grid-template-columns: 1fr; }
+
+      .numbers-row { grid-template-columns: 1fr 1fr; }
+
+      .hero-stats { gap: 32px; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .certif-banner { flex-direction: column; }
+    }
+
+    @media (max-width: 540px) {
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .numbers-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================== NAVBAR ======================== -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="logo__plus_net.png" alt="Ateliers APC" onerror="this.style.display='none'" />
+    <span>ATELIERS APC</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">Notre centre</a></li>
+    <li><a href="#formations">Formations</a></li>
+    <li><a href="#cibles">Pour qui ?</a></li>
+    <li><a href="#process">Comment ça marche</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Nous contacter</a></li>
+  </ul>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ======================== HERO ======================== -->
+<section id="hero">
+  <div class="hero-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Centre de Formation Certifié</div>
+    <h1 class="hero-title">
+      L'excellence<br />
+      <span>thermique</span> &<br />
+      <span class="accent-green">technique</span>,<br />
+      forgée en atelier.
+    </h1>
+    <p class="hero-sub">
+      Ateliers APC forme et certifie les experts techniques de demain sur les installations thermiques et frigorifiques. Jusqu'à 90 % du temps en pratique réelle.
+    </p>
+    <div class="hero-actions">
+      <a href="#formations" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        Voir les formations
+      </a>
+      <a href="#contact" class="btn-secondary">
+        Demander un devis entreprise
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number" style="color:var(--blue);">5</div>
+        <div class="stat-label">Formations<br/>disponibles</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" style="color:var(--green);">140h</div>
+        <div class="stat-label">Cursus<br/>le plus complet</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" style="color:var(--yellow);">90%</div>
+        <div class="stat-label">Temps en<br/>pratique atelier</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-logo-wrap">
+      <div class="logo-ring"></div>
+      <div class="logo-ring2"></div>
+      <img src="logo__plus_net.png" alt="Ateliers APC Logo" />
+    </div>
+  </div>
+</section>
+
+<!-- ======================== CHIFFRES ======================== -->
+<div style="padding: 0 5%;">
+  <div class="numbers-row">
+    <div class="number-cell">
+      <div class="number-big blue">5</div>
+      <div class="number-label">Formations proposées</div>
+    </div>
+    <div class="number-cell">
+      <div class="number-big green">100%</div>
+      <div class="number-label">Formateurs experts terrain</div>
+    </div>
+    <div class="number-cell">
+      <div class="number-big pink">2</div>
+      <div class="number-label">Pôles de spécialisation</div>
+    </div>
+    <div class="number-cell">
+      <div class="number-big yellow">Atelier</div>
+      <div class="number-label">Au cœur de notre pédagogie</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== ABOUT ======================== -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap">
+      <div class="about-img-card">
+        <div class="value-item">
+          <div class="value-icon blue">🔧</div>
+          <div class="value-text">
+            <h4>Le Pragmatisme</h4>
+            <p>On apprend ce qui sert sur les chantiers, pas des théories abstraites. L'atelier est au centre, avec jusqu'à 90 % du temps dédié à la pratique.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon green">📈</div>
+          <div class="value-text">
+            <h4>L'Élévation</h4>
+            <p>On tire l'artisanat vers le haut. De la simple initiation à l'obtention de qualifications reconnues.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon yellow">🏆</div>
+          <div class="value-text">
+            <h4>La Transmission</h4>
+            <p>Nos formateurs sont des experts reconnus et passionnés, dédiés quotidiennement à la montée en compétences de leurs stagiaires.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon pink">⚡</div>
+          <div class="value-text">
+            <h4>La Transition Écologique</h4>
+            <p>Les meilleures technologies vertes ne servent à rien sans des mains expertes pour les installer. On forme ces mains.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-text">
+      <span class="section-label">Notre Centre</span>
+      <h2 class="section-title">Un seul objectif :<br />vous rendre opérationnel.</h2>
+      <div class="baseline">"L'excellence thermique et technique, forgée en atelier."</div>
+      <p class="section-sub">
+        Ateliers APC est un organisme de formation spécialisé dans les installations thermiques, la soudure et les fluides frigorigènes. Situé au 9 rue du Ris à Viry-Châtillon, notre centre couvre un spectre allant de l'initiation d'une journée aux spécialisations pointues de 4 semaines.
+      </p>
+      <p class="section-sub" style="margin-top:16px;">
+        Qu'il s'agisse d'un artisan souhaitant décrocher une certification gaz, ou d'une entreprise cherchant à faire monter en compétences ses équipes techniques, nous avons la formation adaptée.
+      </p>
+      <div class="tag-list">
+        <span class="tag">Soudure cuivre</span>
+        <span class="tag">Soudure acier</span>
+        <span class="tag">Qualification ATG</span>
+        <span class="tag">Chauffage</span>
+        <span class="tag">Fluides frigorigènes</span>
+        <span class="tag">Récupération de chaleur</span>
+        <span class="tag">CVC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== FORMATIONS ======================== -->
+<section id="formations">
+  <div class="section-header">
+    <span class="section-label">Nos Formations</span>
+    <h2 class="section-title">5 formations pour devenir<br />l'expert le plus recherché.</h2>
+    <p class="section-sub">
+      Deux pôles complémentaires : <strong style="color:var(--blue)">Soudure & Acier</strong> pour les formations courtes, et <strong style="color:var(--green)">Transition Énergétique & Fluides</strong> pour les cursus longs.
+    </p>
+  </div>
+
+  <div class="formations-grid">
+
+    <!-- F1 : Initiation Soudure Cuivre -->
+    <div class="formation-card c-blue">
+      <div class="card-icon">🔩</div>
+      <span class="card-tag">Soudure & Acier</span>
+      <h3 class="card-title">Initiation Soudure Cuivre</h3>
+      <p class="card-desc">Découvrez les bases de la soudure cuivre : réglage du poste à souder, pratique bout à bout, mise en pression et vérification de l'étanchéité. Idéal pour acquérir une compétence ponctuelle rapidement.</p>
+      <div class="card-meta">
+        <div class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          7 heures – 1 journée
+        </div>
+        <div class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Tous niveaux
+        </div>
+      </div>
+      <div class="card-price">
+        <span class="price-amount">280€</span>
+        <span class="price-label">HT (336€ TTC)</span>
+      </div>
+      <a href="#contact" class="card-cta" style="color:var(--blue)">
+        S'inscrire <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- F2 : Brasage Capillaire -->
+    <div class="formation-card c-green">
+      <div class="card-icon">🔥</div>
+      <span class="card-tag">Soudure & Acier</span>
+      <h3 class="card-title">Brasage Capillaire</h3>
+      <p class="card-desc">Stage préparatoire à l'examen de soudeur spécialisé pour les tuyauteries gaz en cuivre à moyenne pression. Obtenez le certificat vous autorisant à souder en avant-compteur.</p>
+      <div class="card-meta">
+        <div class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          14 heures – 2 jours
+        </div>
+        <div class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Certificat de soudeur
+        </div>
+      </div>
+      <div class="card-price">
+        <span class="price-amount">990€</span>
+        <span class="price-label">HT (1 188€ TTC)</span>
+      </div>
+      <a href="#contact" class="card-cta" style="color:var(--green)">
+        S'inscrire <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- F3 : Chalumeau Oxyacétylénique -->
+    <div class="formation-card c-yellow">
+      <div class="card-icon">⚡</div>
+      <span class="card-tag">Soudure & Acier</span>
+      <h3 class="card-title">Chalumeau Oxyacétylénique</h3>
+      <p class="card-desc">Perfectionnez-vous aux techniques de soudage O.A pour obtenir ou renouveler votre qualification ATG B540.9. 90% du temps en pratique atelier sur tube acier noir.</p>
+      <div class="card-meta">
+        <div class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          35 heures – 5 jours
+        </div>
+        <div class="meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Qualification ATG B540.9
+        </div>
+      </div>
+      <div class="card-price">
+        <span class="price-amount">1 750€</span>
+        <span class="price-label">HT (2 100€ TTC)</span>
+      </div>
+      <a href="#contact" class="card-cta" style="color:var(--yellow)">
+        S'inscrire <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- F4 : Chauffagiste (wide) -->
+    <div class="formation-card c-pink wide">
+      <div class="card-body">
+        <div class="card-icon">🏗️</div>
+        <span class="card-tag">Transition Énergétique</span>
+        <h3 class="card-title">Chauffagiste Complet</h3>
+        <p class="card-desc">Le cursus le plus complet pour devenir chauffagiste qualifié. Installation de réseaux en tube acier, soudure oxyacétylène, cintrage, filetage et pose de réseaux de chauffage. Programme intensif en petits groupes.</p>
+        <div class="card-meta">
+          <div class="meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            140 heures – 4 semaines
+          </div>
+          <div class="meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            Plombiers depuis 3 ans
+          </div>
+          <div class="meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Attestation professionnelle
+          </div>
+        </div>
+        <div class="card-price">
+          <span class="price-amount">7 600€</span>
+          <span class="price-label">HT (9 120€ TTC)</span>
+        </div>
+        <a href="#contact" class="card-cta" style="color:var(--pink)">
+          Demander un devis <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;min-width:220px;margin-top:auto;">
+        <div style="background:rgba(218,35,97,0.08);border:1px solid rgba(218,35,97,0.15);border-radius:12px;padding:20px;">
+          <div style="font-family:var(--font-title);font-size:0.8rem;font-weight:700;color:var(--pink);margin-bottom:12px;letter-spacing:0.05em;">PROGRAMME</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:0.8rem;color:var(--gray);display:flex;gap:8px;align-items:center;"><span style="color:var(--pink)">▸</span>Soudure oxyacétylénique</li>
+            <li style="font-size:0.8rem;color:var(--gray);display:flex;gap:8px;align-items:center;"><span style="color:var(--pink)">▸</span>Cintrage de tubes</li>
+            <li style="font-size:0.8rem;color:var(--gray);display:flex;gap:8px;align-items:center;"><span style="color:var(--pink)">▸</span>Filetage de tubes</li>
+            <li style="font-size:0.8rem;color:var(--gray);display:flex;gap:8px;align-items:center;"><span style="color:var(--pink)">▸</span>Piquages sur tube acier</li>
+            <li style="font-size:0.8rem;color:var(--gray);display:flex;gap:8px;align-items:center;"><span style="color:var(--pink)">▸</span>Réseaux de chauffage</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- F5 : Eco-performance -->
+    <div class="formation-card c-green" style="grid-column:span 3;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;align-items:start;width:100%;">
+        <div style="grid-column:span 2;">
+          <div class="card-icon">🌿</div>
+          <span class="card-tag">Transition Énergétique & Fluides</span>
+          <h3 class="card-title">Éco-Performance & Récupération de Chaleur</h3>
+          <p class="card-desc">La formation la plus complète du marché. Concevez, installez et mettez en service un système de récupération de chaleur sur installations frigorifiques. Inclut l'attestation de manipulation des fluides frigorigènes (catégorie I).</p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              ~140 heures – 4 semaines
+            </div>
+            <div class="meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Techniciens CVC / Froid
+            </div>
+          </div>
+          <a href="#contact" class="card-cta" style="color:var(--green);margin-top:24px;display:inline-flex;">
+            Renseignements & tarif <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:rgba(134,197,71,0.08);border:1px solid rgba(134,197,71,0.15);border-radius:12px;padding:20px;">
+            <div style="font-family:var(--font-title);font-size:0.8rem;font-weight:700;color:var(--green);margin-bottom:14px;letter-spacing:0.05em;">3 BLOCS DE COMPÉTENCES</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.8);padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border-left:2px solid var(--green);">
+                <strong style="display:block;margin-bottom:2px;">Bloc 1</strong>Diagnostic & conception du système
+              </div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.8);padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border-left:2px solid var(--blue);">
+                <strong style="display:block;margin-bottom:2px;">Bloc 2</strong>Réalisation & raccordement des circuits
+              </div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.8);padding:10px;background:rgba(255,255,255,0.03);border-radius:8px;border-left:2px solid var(--yellow);">
+                <strong style="display:block;margin-bottom:2px;">Bloc 3</strong>Mise en service & maintenance
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Certif banner -->
+  <div class="certif-banner">
+    <div class="certif-text">
+      <h3>🏅 Des certifications reconnues par les professionnels</h3>
+      <p>Nos formations préparent à des qualifications officielles exigées par les entreprises du secteur.</p>
+    </div>
+    <div class="certif-logos">
+      <div class="certif-badge-item">ATG B540.9</div>
+      <div class="certif-badge-item">Certificat Soudeur</div>
+      <div class="certif-badge-item">Fluides Frigorigènes Cat. I</div>
+      <div class="certif-badge-item">Licence 540B.9</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== POUR QUI ======================== -->
+<section id="cibles">
+  <div class="section-header">
+    <span class="section-label">Pour Qui ?</span>
+    <h2 class="section-title">Nous formons<br />deux types de clients.</h2>
+    <p class="section-sub">Nos formations s'adressent aussi bien aux entreprises qui souhaitent certifier leurs équipes qu'aux artisans qui veulent évoluer dans leur carrière.</p>
+  </div>
+
+  <div class="cibles-grid">
+    <div class="cible-card">
+      <div class="cible-header">
+        <span class="cible-badge b2b">B2B – Entreprises</span>
+      </div>
+      <h3 class="cible-title">Le Patron d'Entreprise CVC / Froid</h3>
+      <p class="cible-desc">Vous dirigez une entreprise de plomberie, chauffage, froid industriel ou de maintenance thermique. Vous avez besoin de certifications obligatoires pour accéder à de nouveaux marchés et rester conforme aux réglementations.</p>
+      <ul class="cible-list">
+        <li>Entreprises de plomberie-chauffage</li>
+        <li>Entreprises de froid industriel et commercial</li>
+        <li>Intégrateurs de systèmes thermodynamiques</li>
+        <li>Sociétés de maintenance CVC</li>
+        <li>Responsables énergie / efficacité énergétique</li>
+      </ul>
+      <div class="promise-box b2b">
+        <strong>Notre promesse pour vous :</strong>
+        "Sécurisez vos futurs chantiers avec une équipe d'experts certifiés."
+      </div>
+    </div>
+
+    <div class="cible-card">
+      <div class="cible-header">
+        <span class="cible-badge b2c">B2C – Particuliers</span>
+      </div>
+      <h3 class="cible-title">L'Artisan ou l'Ouvrier en Poste</h3>
+      <p class="cible-desc">Vous êtes plombier, chauffagiste, technicien de maintenance ou installateur froid. Vous voulez décrocher des qualifications reconnues, progresser dans votre métier et travailler sur des projets à plus haute valeur ajoutée.</p>
+      <ul class="cible-list">
+        <li>Ouvriers qualifiés en plomberie / chauffage</li>
+        <li>Installateurs et mainteneurs froid et climatisation</li>
+        <li>Techniciens de maintenance CVC</li>
+        <li>Artisans souhaitant se reconvertir</li>
+        <li>Demandeurs d'emploi du secteur technique</li>
+      </ul>
+      <div class="promise-box b2c">
+        <strong>Notre promesse pour vous :</strong>
+        "Devenez le profil le plus recherché du marché du bâtiment."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== PROCESS ======================== -->
+<section id="process">
+  <div class="section-header">
+    <span class="section-label">Comment ça marche</span>
+    <h2 class="section-title">De l'inscription à<br />la certification, étape par étape.</h2>
+  </div>
+
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h4 class="step-title">Choisissez votre formation</h4>
+      <p class="step-desc">Identifiez la formation qui correspond à votre profil et vos objectifs professionnels parmi notre catalogue. En cas de doute, contactez-nous pour un accompagnement personnalisé.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h4 class="step-title">Déposez votre dossier</h4>
+      <p class="step-desc">Remplissez le formulaire de contact ou appelez-nous. Nous validons ensemble les prérequis et établissons une convention de formation (obligatoire pour le financement).</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h4 class="step-title">Pratiquez en atelier</h4>
+      <p class="step-desc">Rejoignez notre atelier à Viry-Châtillon. Vous travaillez sur de vraies machines thermiques en petits groupes, encadrés par des formateurs experts du terrain.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h4 class="step-title">Obtenez votre certification</h4>
+      <p class="step-desc">À l'issue de la formation, vous passez les épreuves de qualification et obtenez vos certifications (ATG, soudeur spécialisé, fluides frigorigènes…) reconnues dans tout le secteur.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== TEMOIGNAGES ======================== -->
+<section id="preuves">
+  <div class="section-header">
+    <span class="section-label">Ils nous font confiance</span>
+    <h2 class="section-title">Des artisans qui sont<br />passés à la vitesse supérieure.</h2>
+  </div>
+
+  <div class="preuves-grid">
+    <div class="preuve-card">
+      <div class="stars">★★★★★</div>
+      <p class="preuve-quote">Avant la formation, je refusais certains chantiers gaz. Maintenant avec ma licence 540B.9, j'interviens en avant compteur. Le retour sur investissement a été immédiat.</p>
+      <div class="preuve-author">
+        <div class="author-avatar">ML</div>
+        <div class="author-info">
+          <h5>Marc L.</h5>
+          <p>Artisan plombier – Île-de-France</p>
+        </div>
+      </div>
+    </div>
+    <div class="preuve-card">
+      <div class="stars">★★★★★</div>
+      <p class="preuve-quote">J'ai envoyé deux de mes techniciens sur la formation éco-performance. La qualité de la pédagogie est au rendez-vous. On retrouve exactement les situations rencontrées sur le terrain.</p>
+      <div class="preuve-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,var(--pink),var(--yellow))">SB</div>
+        <div class="author-info">
+          <h5>Sophie B.</h5>
+          <p>Dirigeante – Entreprise CVC 91</p>
+        </div>
+      </div>
+    </div>
+    <div class="preuve-card">
+      <div class="stars">★★★★★</div>
+      <p class="preuve-quote">Formation chauffagiste très exigeante mais les formateurs sont hyper disponibles. En 4 semaines j'ai acquis plus que durant les 2 dernières années. Je recommande sans hésiter.</p>
+      <div class="preuve-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,var(--green),var(--blue))">KD</div>
+        <div class="author-info">
+          <h5>Karim D.</h5>
+          <p>Plombier en reconversion – Paris</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== FAQ ======================== -->
+<section id="faq">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+    <div>
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Questions<br />fréquentes.</h2>
+      <p class="section-sub" style="margin-top:16px;">Vous avez une question ? N'hésitez pas à nous contacter directement si vous ne trouvez pas la réponse ici.</p>
+      <a href="#contact" class="btn-primary" style="margin-top:32px;display:inline-flex;">Nous poser une question</a>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item open">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Les formations sont-elles finançables par mon OPCO ?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          Oui, la plupart de nos formations sont éligibles aux dispositifs de financement de la formation professionnelle continue (OPCO, CPF). Contactez-nous pour établir un dossier de prise en charge adapté à votre situation ou à celle de votre entreprise.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Où se déroulent les formations ?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          Toutes nos formations se déroulent dans notre atelier situé au 9 rue du Ris, Viry-Châtillon (91). Nos locaux sont équipés de vrais matériels thermiques pour vous assurer une expérience 100% terrain.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Quel est le nombre de participants par session ?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          Nous travaillons volontairement en petits groupes pour garantir un suivi individualisé de chaque stagiaire. Cette approche est au cœur de notre pédagogie : chaque participant bénéficie d'un accompagnement personnalisé par nos formateurs experts.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Quels sont les prérequis pour la formation Chauffagiste ?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          La formation Chauffagiste est accessible aux plombiers justifiant de 3 ans d'expérience, en tant que salarié ou indépendant. Pour les autres formations, les prérequis varient : certaines sont accessibles à tous (initiation), d'autres requièrent une maîtrise professionnelle du brasage ou du soudage.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Comment obtenir un devis pour ma société ?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          Remplissez le formulaire de contact en indiquant le nombre de salariés à former, les formations souhaitées, et vos éventuelles contraintes de planning. Nous vous adressons un devis personnalisé sous 48h ouvrées.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== CONTACT ======================== -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-label">Contact</span>
+    <h2 class="section-title">Commençons<br />à travailler ensemble.</h2>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>On vous répond<br />sous 48h.</h3>
+      <p>Que vous soyez un particulier souhaitant vous former ou une entreprise cherchant à certifier vos équipes, notre équipe est là pour trouver la solution adaptée à vos besoins.</p>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text">
+          <h5>Adresse</h5>
+          <p>9 rue du Ris<br />91170 Viry-Châtillon</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🌐</div>
+        <div class="contact-detail-text">
+          <h5>Site web</h5>
+          <p>ateliersapc.fr</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div class="contact-detail-text">
+          <h5>E-mail</h5>
+          <p>contact@ateliersapc.fr</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom *</label>
+            <input type="text" placeholder="Jean" required />
+          </div>
+          <div class="form-group">
+            <label>Nom *</label>
+            <input type="text" placeholder="Dupont" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" placeholder="jean@exemple.com" required />
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" placeholder="06 12 34 56 78" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Vous êtes</label>
+          <select>
+            <option value="">Sélectionnez...</option>
+            <option>Un particulier / artisan</option>
+            <option>Un dirigeant d'entreprise</option>
+            <option>Un salarié envoyé par mon employeur</option>
+            <option>Un demandeur d'emploi</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Formation souhaitée</label>
+          <select>
+            <option value="">Sélectionnez une formation...</option>
+            <option>Initiation Soudure Cuivre (1 jour)</option>
+            <option>Brasage Capillaire (2 jours)</option>
+            <option>Chalumeau Oxyacétylénique (5 jours)</option>
+            <option>Chauffagiste Complet (4 semaines)</option>
+            <option>Éco-Performance & Récupération de Chaleur (4 semaines)</option>
+            <option>Autre / Je ne sais pas encore</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Votre message</label>
+          <textarea placeholder="Décrivez votre situation, le nombre de personnes à former, vos disponibilités..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          Envoyer ma demande →
+        </button>
+        <p id="form-success" style="display:none;color:var(--green);font-size:0.85rem;margin-top:8px;">✅ Votre message a bien été envoyé ! Nous vous recontactons sous 48h.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== FOOTER ======================== -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="logo__plus_net.png" alt="Ateliers APC" onerror="this.style.display='none'" />
+        <span>ATELIERS APC</span>
+      </div>
+      <p>Centre de formation technique spécialisé en soudure, installations thermiques et fluides frigorigènes. Situé à Viry-Châtillon.</p>
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+        <a href="#" class="social-link" aria-label="Facebook">f</a>
+        <a href="#" class="social-link" aria-label="Instagram">ig</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Formations</h5>
+      <ul>
+        <li><a href="#formations">Initiation Soudure Cuivre</a></li>
+        <li><a href="#formations">Brasage Capillaire</a></li>
+        <li><a href="#formations">Chalumeau Oxyacétylénique</a></li>
+        <li><a href="#formations">Chauffagiste</a></li>
+        <li><a href="#formations">Éco-Performance & Chaleur</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Centre</h5>
+      <ul>
+        <li><a href="#about">Notre ADN</a></li>
+        <li><a href="#cibles">Pour qui ?</a></li>
+        <li><a href="#process">Comment ça marche</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Adresse</h5>
+      <ul>
+        <li><a href="#">9 rue du Ris</a></li>
+        <li><a href="#">91170 Viry-Châtillon</a></li>
+        <li><a href="#">ateliersapc.fr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Ateliers APC — Tous droits réservés.</p>
+    <div class="color-bar">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <p>Organisme de Formation Professionnelle Continue</p>
+  </div>
+</footer>
+
+<!-- ======================== SCRIPTS ======================== -->
+<script>
+  // Navbar burger
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(13,17,23,0.97)';
+    } else {
+      nav.style.background = 'rgba(13,17,23,0.85)';
+    }
+  });
+
+  // FAQ
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Envoi en cours...';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }, 1200);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.formation-card, .cible-card, .preuve-card, .process-step, .value-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
